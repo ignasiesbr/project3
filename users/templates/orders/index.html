@@ -22,7 +22,7 @@
 <h2>Pasta</h2>
 {% for pasta in pastas %}
   <li>
-    {{ pasta }}
+    {{ pasta }}, {{ pasta.id }}
 
     <a href="{% url 'add_to_cart' pasta.id %}">Add to cart</a>
 
@@ -52,7 +52,14 @@
 
 <h2>Cart</h2>
 <h4>Items in cart: </h4>
+{% for entry in entries %}
+<li>
+  {{ entry }}
+</li>
+
+{% endfor %}
 <hr/>
+<h3>Total: {{ cart.total }}</h3>
 
 
 {% endblock %}
