@@ -3,12 +3,10 @@
 {% block body %}
 <h1>Added to cart</h1>
 
-{% for item in items %}
-  <li>
-    {{ item.name }} - {{ item.price }}
-  </li>
-{% endfor %}
-
-<h5>Cart id: {{ cart.id }}</h5>
-
+<h2>initial_cart</h2>
+{{ initial_cart }}
+<h2>final_cart</h2>
+{{ final_cart }}
+<h2>entry</h2>
+{{ entry }}
 {% endblock %}
