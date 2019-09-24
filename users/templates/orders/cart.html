@@ -1,0 +1,14 @@
+{% extends "users/base.html" %}
+
+{% block body %}
+<h1>Added to cart</h1>
+
+{% for item in items %}
+  <li>
+    {{ item.name }} - {{ item.price }}
+  </li>
+{% endfor %}
+
+<h5>Cart id: {{ cart.id }}</h5>
+
+{% endblock %}

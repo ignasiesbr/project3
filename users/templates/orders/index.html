@@ -1,0 +1,58 @@
+{% extends "users/base.html" %}
+
+
+
+{% block body %}
+<h1>Welcome {{user.username}}</h1>
+
+<h2>Subs</h2>
+{% for sub in subs %}
+  <li>
+    {{ sub  }}
+  </li>
+{% endfor %}
+
+<h4>Extras:</h4>
+{% for extra in extrasubs %}
+  <li>
+    {{ extra }}
+  </li>
+{% endfor %}
+
+<h2>Pasta</h2>
+{% for pasta in pastas %}
+  <li>
+    {{ pasta }}
+
+    <a href="{% url 'add_to_cart' pasta.id %}">Add to cart</a>
+
+  </li>
+
+{% endfor %}
+
+<h2>Dinner Platters</h2>
+{% for platter in platters %}
+  <li>
+    <span>{{ platter }}</span>
+  </li>
+{% endfor %}
+
+<h2>Salads</h2>
+{% for salad in salads %}
+  <li>
+    {{ salad }}
+  </li>
+{% endfor %}
+
+<form>
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">Submit</button>
+</form>
+
+<h2>Cart</h2>
+<h4>Items in cart: </h4>
+<hr/>
+
+
+{% endblock %}
