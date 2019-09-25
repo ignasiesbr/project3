@@ -15,39 +15,37 @@ STYLES = (
 
 # Create your models here.
 
-class Pasta(models.Model):
+class Item(models.Model):
+    super_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     price = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"{self.name} - ${self.price}"
 
-class Salad(models.Model):
-    name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
+class Pasta(Item):
 
     def __str__(self):
         return f"{self.name} - ${self.price}"
 
-class DinnerPlatter(models.Model):
-    name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
+class Salad(Item):
+
+    def __str__(self):
+        return f"{self.name} - ${self.price}"
+
+class DinnerPlatter(Item):
     size = models.CharField(max_length=10, choices=SIZES)
 
     def __str__(self):
         return f"{self.name} - ${self.price} - size: {self.size}"
 
-class SubExtra(models.Model):
-    name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
+class SubExtra(Item):
 
     def __str__(self):
         return f"{self.name} - ${self.price}"
 
-class Sub(models.Model):
-    name = models.CharField(max_length=64)
+class Sub(Item):
     size = models.CharField(max_length=10, choices=SIZES)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
     extra = models.ManyToManyField(SubExtra, blank=True)
 
     def __str__(self):
@@ -67,7 +65,21 @@ class Pizza(models.Model):
     def __str__(self):
         return f"{self.get_style_display()} - {self.get_size_display()} - {self.price} - Toppings: {self.toppings.in_bulk()}"
 
+class PizzaPrice(models.Model):
+    CHOICES = (
+        ('CH', 'Cheese'),
+        ('1', '1 Topping'),
+        ('2', '2 Toppings'),
+        ('3', '3 Toppings'),
+        ('SP', 'Special')
+    )
+    type = models.CharField(max_length=10, choices=STYLES)
+    style = models.CharField(max_length=10, choices=CHOICES)
+    size = models.CharField(max_length=10, choices=SIZES)
+    price = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return f"Pizza: {self.type} - Style: {self.style} - Size: {self.size}"
 class PizzaOrder(Pizza):
     CHOICES = (
         ('CH', 'Cheese'),
@@ -97,7 +109,7 @@ class Cart(models.Model):
         return "User: {} has {} items in their cart. Their total is ${}".format(self.user_id, self.count, self.total)
 
 class Entry(models.Model):
-    product = models.ForeignKey(Pasta, null=True, on_delete=models.CASCADE)
+    product = models.ForeignKey(Item, null=True, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, null=True, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
 

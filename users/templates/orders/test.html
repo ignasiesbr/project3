@@ -1,0 +1,18 @@
+{% extends "users/base.html" %}
+
+{% block body %}
+<h2>Style</h2>
+{{ style }}
+<h2>extras</h2>
+{{ extras }}
+<h2>toppings</h2>
+{% for topping in toppings %}
+{{ topping }}
+{% endfor %}
+<h2>quantity</h2>
+{{ quantity }}
+<h2>Number of toppings</h2>
+{{ ntoppings}}
+<h2>Price</h2>
+{{ price }}
+{% endblock %}

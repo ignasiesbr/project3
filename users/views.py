@@ -16,13 +16,16 @@ def index(request):
     return render(request, "pizza/home.html", context)
 
 def login_view(request):
-    username = request.POST["username"]
-    password = request.POST["password"]
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
-    return render(request, "users/login.html", {"message":"Invalid credentials"})
+    if request.method =="POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        return render(request, "users/login.html", {"message":"Invalid credentials"})
+    else:
+        return render(request, "users/login.html")
 
 def logout_view(request):
     logout(request)

@@ -22,9 +22,8 @@
 <h2>Pasta</h2>
 {% for pasta in pastas %}
   <li>
-    {{ pasta }}, {{ pasta.id }}
-
-    <a href="{% url 'add_to_cart' pasta.id %}">Add to cart</a>
+    {{ pasta }}, {{ pasta.super_id }}
+    <a href="{% url 'add_to_cart' pasta.super_id %}">Add to cart</a>
 
   </li>
 
@@ -33,21 +32,23 @@
 <h2>Dinner Platters</h2>
 {% for platter in platters %}
   <li>
-    <span>{{ platter }}</span>
+    {{ platter }}, {{ platter.super_id }}
+    <a href="{% url 'add_to_cart' platter.super_id %}">Add to cart</a>
   </li>
 {% endfor %}
 
 <h2>Salads</h2>
 {% for salad in salads %}
   <li>
-    {{ salad }}
+    {{ salad }}, {{ salad.super_id }}
+    <a href="{% url 'add_to_cart' salad.super_id %}">Add to cart</a>
   </li>
 {% endfor %}
-
-<form>
+<h2>Pizzas</h2>
+<form action="{% url 'add_pizza_cart' %}" method="post">
   {% csrf_token %}
   {{ form }}
-  <button type="submit">Submit</button>
+  <input type="submit" value="Submit"/>
 </form>
 
 <h2>Cart</h2>
@@ -61,5 +62,9 @@
 <hr/>
 <h3>Total: {{ cart.total }}</h3>
 
+<h2>Test area</h2>
+{% for item in items %}
+<li>{{ item }}</li>
+{% endfor %}
 
 {% endblock %}
